@@ -13,13 +13,24 @@
 
 'use strict';
 
+// Import packages and dependencies
+const {Storage} = require('@google-cloud/storage');
+const path = require('path')
+
+// Add path to storage service account details
+const serviceKey = path.join(__dirname, '<path to service account details>');
+
 const GOOGLE_CLOUD_PROJECT = process.env['GOOGLE_CLOUD_PROJECT'];
 const CLOUD_BUCKET = GOOGLE_CLOUD_PROJECT + '_bucket';
 
 // [START bookshelf_cloud_storage_client]
-const {Storage} = require('@google-cloud/storage');
 
-const storage = new Storage();
+// Initialize storage config with service account
+const storage = new Storage({
+	keyFilename: serviceKey,
+	projectId: GOOGLE_CLOUD_PROJECT,
+})
+
 const bucket = storage.bucket(CLOUD_BUCKET);
 // [END bookshelf_cloud_storage_client]
 
